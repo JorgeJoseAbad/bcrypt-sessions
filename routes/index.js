@@ -14,6 +14,7 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.get('/register', function(req, res, next) {
+  debugger;
   if (req.session.currentUser) {
     return res.send(`You ${req.session.currentUser.username} are already logged`);
   }
@@ -58,24 +59,44 @@ router.post('/login', function(req, res, next) {
   User.findOne({username: username}, function(err, user) {
     if (err) return next(err)
 
-    const hash = user.hash
+    if ( user == null ){
+      res.render('auth-user', {
+        header: 'User invalid',
+        action: '/login',
+        buttonText: 'Login',
+        error: true
+      });
+    } else {
+      const hash = user.hash
 
-    bcrypt.compare(password, hash, function(err, isValid) {
-      if (err) return next(err)
+      bcrypt.compare(password, hash, function(err, isValid) {
+        if (err) return next(err)
 
-      if (!isValid) {
-        res.render('auth-user', {
-          header: 'Login a new secure user',
-          action: '/login',
-          buttonText: 'Login',
-          error: true
-        });
-      }
-      else {
-        req.session.currentUser = user
-        res.redirect('/')
-      }
-    })
+        if (!isValid) {
+          res.render('auth-user', {
+            header: 'Login with a correct password',
+            action: '/login',
+            buttonText: 'Login',
+            error: true
+          });
+        }
+        else {
+          let objetoTest = {
+            campo1: "hola",
+            campo2: 2
+          }
+          req.session.currentUser = user;
+          req.session.data = objetoTest; 
+          res.redirect("/user") //go user page data pass in req.session
+          /*
+          res.render('user',{
+              title: 'Express',
+              user: req.session.currentUser.username
+          });
+          */
+        }
+      })
+    }
   })
 });
 

@@ -18,6 +18,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
+var user = require('./routes/users');
 
 var app = express();
 
@@ -35,19 +36,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: "basic-auth-secret",
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 60000 * 5 },
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+      maxAge: 60000 * 5
+    },
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
-    ttl: 24 * 60 * 60 // 1 day
-    crypto:{
-      secret:'squirel'
+    ttl: 24 * 60 * 60, // 1 day
+  crypto:{
+      secret:'basic-auth-secret'
     }
   })
 }));
 
 app.use('/', index);
+app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
