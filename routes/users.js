@@ -5,11 +5,12 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt')
 
 router.get('/',function(req,res,next) {
-  debugger;
+
   res.render('user', {
     title: 'User page',
     user: req.session.currentUser.username,
-    campo: req.session.data.campo1
+    dataOne: req.session.data.dataOne,
+    dataTwo: req.session.data.dataTwo
   });
 })
 

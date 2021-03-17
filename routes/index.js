@@ -5,7 +5,15 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt')
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  let myUsername;
+  if (req.session.currentUser != undefined){
+    myUsername = req.session.currentUser.username;
+  } else myUsername = "anonimous"
+  debugger
+  res.render('index', {
+    title: 'Express',
+    username: myUsername
+  });
 });
 
 router.get('/logout', function(req, res, next) {
@@ -81,19 +89,14 @@ router.post('/login', function(req, res, next) {
           });
         }
         else {
-          let objetoTest = {
-            campo1: "hola",
-            campo2: 2
+          let fakeData = {
+            dataOne: "hola",
+            dataTwo: 2
           }
           req.session.currentUser = user;
-          req.session.data = objetoTest; 
-          res.redirect("/user") //go user page data pass in req.session
-          /*
-          res.render('user',{
-              title: 'Express',
-              user: req.session.currentUser.username
-          });
-          */
+          req.session.data = fakeData;
+          res.redirect("/user")
+
         }
       })
     }
