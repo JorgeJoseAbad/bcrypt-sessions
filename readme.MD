@@ -2,7 +2,7 @@
 
 Bcrypt + Express-sessions; back-end proyect with Node/Express/MongoDB, generated with express-generator.
 
-Elementary practice in routing, views, models, and database connection using Mongoose. And signup and login with encryption using Bcrypt. And sessions and use
+Elementary practice in routing, views, models, and database connection using Mongoose. And signup and login with encryption using Bcrypt. And sessions and use of
 req.session object.
 
 ## Data Base
@@ -23,7 +23,7 @@ mongoDB (v3.x)
 - morgan
 - serve-favicon
 
-And Bootstrap from CDN
+And Bootstrap from CDN, no CSS reset.
 
 ## Use it if you want
 You can clone it, or download, or fork.
