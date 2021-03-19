@@ -9,7 +9,6 @@ router.get('/', function(req, res, next) {
   if (req.session.currentUser != undefined){
     myUsername = req.session.currentUser.username;
   } else myUsername = "anonimous"
-  debugger
   res.render('index', {
     title: 'Express',
     username: myUsername
@@ -22,7 +21,6 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.get('/register', function(req, res, next) {
-  debugger;
   if (req.session.currentUser) {
     return res.send(`You ${req.session.currentUser.username} are already logged`);
   }
